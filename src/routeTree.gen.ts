@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SlugRouteImport } from './routes/$slug'
+import { Route as AdminSlugRouteImport } from './routes/admin.$slug'
 
 const SlugRoute = SlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSlugRoute = AdminSlugRouteImport.update({
+  id: '/admin/$slug',
+  path: '/admin/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/$slug': typeof SlugRoute
+  '/admin/$slug': typeof AdminSlugRoute
 }
 export interface FileRoutesByTo {
   '/$slug': typeof SlugRoute
+  '/admin/$slug': typeof AdminSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/$slug': typeof SlugRoute
+  '/admin/$slug': typeof AdminSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/$slug'
+  fullPaths: '/$slug' | '/admin/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/$slug'
-  id: '__root__' | '/$slug'
+  to: '/$slug' | '/admin/$slug'
+  id: '__root__' | '/$slug' | '/admin/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   SlugRoute: typeof SlugRoute
+  AdminSlugRoute: typeof AdminSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/$slug': {
+      id: '/admin/$slug'
+      path: '/admin/$slug'
+      fullPath: '/admin/$slug'
+      preLoaderRoute: typeof AdminSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   SlugRoute: SlugRoute,
+  AdminSlugRoute: AdminSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
