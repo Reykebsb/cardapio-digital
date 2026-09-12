@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -37,4 +38,9 @@ h1, h2, h3 {
 
 .bg-brand {
   background-color: var(--color-brand);
+}
+
+html, body {
+  background-color: #0a0a0a !important;
+  color: #ffffff;
 }
